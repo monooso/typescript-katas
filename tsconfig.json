@@ -5,7 +5,10 @@
         "moduleResolution": "node",
         "noImplicitAny": true,
         "outDir": "dist",
-        "rootDir": "src",
+        "rootDirs": [
+            "src",
+            "test"
+        ],
         "sourceMap": true,
         "target": "es6"
     },
