@@ -1,0 +1,37 @@
+{
+  "name": "typescript-code-katas",
+  "version": "0.0.0",
+  "description": "TypeScript Code Katas",
+  "author": "Stephen Lewis <stephen@experiencehq.net>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "jest": {
+    "globals": {
+      "__TS_CONFIG__": "tsconfig.json"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.(ts|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "./node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "dependencies": {
+    "app-module-path": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.8",
+    "@types/node": "^8.0.26",
+    "jest": "^21.0.1",
+    "ts-jest": "^21.0.0",
+    "typescript": "^2.5.2"
+  }
+}

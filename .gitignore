@@ -1,0 +1,5 @@
+# System directories and files
+.DS_Store
+
+# Project directories and files
+/dist
