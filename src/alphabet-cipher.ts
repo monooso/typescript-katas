@@ -3,6 +3,10 @@
  * @see https://en.wikipedia.org/wiki/The_Alphabet_Cipher
  */
 
+interface Callback {
+    (subject: string, salt: string): string
+}
+
 export class Cipher {
     /**
      * Decodes the given string, using the given salt.
@@ -13,15 +17,60 @@ export class Cipher {
      * @return {string}
      */
     public static decode(encoded: string, salt: string): string {
-        let decoded = "";
+        let map = this.getCipherMap();
 
-        salt = this.normalizeSalt(salt, encoded.length);
+        return this.process(encoded, salt, function (character: string, salt: string): string {
+            return map.charAt(map.lastIndexOf(character) - map.indexOf(salt));
+        });
+    }
 
-        for (let index = 0; index < encoded.length; index++) {
-            decoded += this.decodeCharacter(encoded.charAt(index), salt.charAt(index));
+    /**
+     * Encodes the given string, using the given salt.
+     *
+     * @param {string} unencoded
+     * @param {string} salt
+     *
+     * @return {string}
+     */
+    public static encode(unencoded: string, salt: string): string {
+        let map = this.getCipherMap();
+
+        return this.process(unencoded, salt, function (character: string, salt: string): string {
+            return map.charAt(map.indexOf(character) + map.indexOf(salt));
+        });
+    }
+
+    /**
+     * Processes the given subject string and salt, using the given callback function.
+     *
+     * @param {string} subject
+     * @param {string} salt
+     * @param {Callback} callback
+     *
+     * @return {string}
+     */
+    private static process(subject: string, salt: string, callback: Callback): string {
+        let processed = "";
+
+        subject = this.normalizeSubject(subject);
+        salt = this.normalizeSalt(salt, subject.length);
+
+        for (let index = 0; index < subject.length; index++) {
+            processed += callback(subject.charAt(index), salt.charAt(index));
         }
 
-        return decoded;
+        return processed;
+    }
+
+    /**
+     * Normalises the given "subject" string.
+     *
+     * @param {string} subject
+     *
+     * @return {string}
+     */
+    private static normalizeSubject(subject: string): string {
+        return this.removeInvalidCharacters(subject);
     }
 
     /**
@@ -43,62 +92,6 @@ export class Cipher {
     }
 
     /**
-     * Decodes a single character, using the given salt.
-     *
-     * @param {string} encoded
-     * @param {string} salt
-     *
-     * @return {string}
-     */
-    private static decodeCharacter(encoded: string, salt: string): string {
-        let aCharCode = "a".charCodeAt(0);
-        let zCharCode = "z".charCodeAt(0);
-        let encodedCharCode = encoded.charCodeAt(0);
-        let saltCharCode = salt.charCodeAt(0);
-
-        let charCodeOffset = saltCharCode - aCharCode;
-        let decodedCharCode = encodedCharCode - charCodeOffset;
-
-        if (decodedCharCode < aCharCode) {
-            decodedCharCode = zCharCode - (aCharCode - decodedCharCode - 1);
-        }
-
-        return String.fromCharCode(decodedCharCode);
-    }
-
-    /**
-     * Encodes the given string, using the given salt.
-     *
-     * @param {string} unencoded
-     * @param {string} salt
-     *
-     * @return {string}
-     */
-    public static encode(unencoded: string, salt: string): string {
-        let encoded = "";
-
-        unencoded = this.normalizeUnencoded(unencoded);
-        salt = this.normalizeSalt(salt, unencoded.length);
-
-        for (let index = 0; index < unencoded.length; index++) {
-            encoded += this.encodeCharacter(unencoded.charAt(index), salt.charAt(index));
-        }
-
-        return encoded;
-    }
-
-    /**
-     * Removes any invalid characters from the given unencoded string.
-     *
-     * @param {string} raw
-     *
-     * @return {string}
-     */
-    private static normalizeUnencoded(raw: string): string {
-        return this.removeInvalidCharacters(raw);
-    }
-
-    /**
      * Removes any invalid characters from the given string.
      *
      * @param {string} input
@@ -111,26 +104,11 @@ export class Cipher {
     }
 
     /**
-     * Encodes a single character, using the given salt.
-     *
-     * @param {string} raw
-     * @param {string} salt
+     * Returns the cipher "map".
      *
      * @return {string}
      */
-    private static encodeCharacter(raw: string, salt: string): string {
-        let aCharCode = "a".charCodeAt(0);
-        let zCharCode = "z".charCodeAt(0);
-
-        let rawCharCode = raw.charCodeAt(0);
-        let saltCharCode = salt.charCodeAt(0);
-
-        let newCharCode = rawCharCode + (saltCharCode - aCharCode);
-
-        if (newCharCode > zCharCode) {
-            newCharCode = aCharCode + (newCharCode - zCharCode - 1);
-        }
-
-        return String.fromCharCode(newCharCode);
+    private static getCipherMap(): string {
+        return "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
     }
 }
