@@ -51,19 +51,9 @@ export class Cipher {
      * @return {string}
      */
     private static decodeCharacter(encoded: string, salt: string): string {
-        let aCharCode = "a".charCodeAt(0);
-        let zCharCode = "z".charCodeAt(0);
-        let encodedCharCode = encoded.charCodeAt(0);
-        let saltCharCode = salt.charCodeAt(0);
+        let map = this.getCipherMap();
 
-        let charCodeOffset = saltCharCode - aCharCode;
-        let decodedCharCode = encodedCharCode - charCodeOffset;
-
-        if (decodedCharCode < aCharCode) {
-            decodedCharCode = zCharCode - (aCharCode - decodedCharCode - 1);
-        }
-
-        return String.fromCharCode(decodedCharCode);
+        return map.charAt(map.lastIndexOf(encoded) - map.indexOf(salt));
     }
 
     /**
@@ -113,24 +103,18 @@ export class Cipher {
     /**
      * Encodes a single character, using the given salt.
      *
-     * @param {string} raw
+     * @param {string} unencoded
      * @param {string} salt
      *
      * @return {string}
      */
-    private static encodeCharacter(raw: string, salt: string): string {
-        let aCharCode = "a".charCodeAt(0);
-        let zCharCode = "z".charCodeAt(0);
+    private static encodeCharacter(unencoded: string, salt: string): string {
+        let map = this.getCipherMap();
 
-        let rawCharCode = raw.charCodeAt(0);
-        let saltCharCode = salt.charCodeAt(0);
+        return map.charAt(map.indexOf(unencoded) + map.indexOf(salt));
+    }
 
-        let newCharCode = rawCharCode + (saltCharCode - aCharCode);
-
-        if (newCharCode > zCharCode) {
-            newCharCode = aCharCode + (newCharCode - zCharCode - 1);
-        }
-
-        return String.fromCharCode(newCharCode);
+    private static getCipherMap(): string {
+        return "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
     }
 }
