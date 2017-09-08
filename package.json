@@ -6,32 +6,18 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "jest --forceExit"
-  },
-  "jest": {
-    "globals": {
-      "__TS_CONFIG__": "tsconfig.json"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/test/**/*.test.(ts|js)"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "./node_modules/ts-jest/preprocessor.js"
-    }
+    "test": "mocha -r ts-node/register test/**/*.ts"
   },
   "dependencies": {
     "app-module-path": "^2.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.8",
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.42",
     "@types/node": "^8.0.26",
-    "jest": "^21.0.1",
-    "ts-jest": "^21.0.0",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.0",
+    "ts-node": "^3.3.0",
     "typescript": "^2.5.2"
   }
 }
