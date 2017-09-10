@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 
-import { Cipher } from "../src/alphabet-cipher";
+import { Cipher } from "./../../src/alphabetCipher";
 
 describe("Alphabet Cipher", function () {
     it("encodes a single character", function () {
