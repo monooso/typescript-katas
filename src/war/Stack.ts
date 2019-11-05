@@ -46,7 +46,7 @@ export class Stack {
      */
     public pop(): Card {
         this.validateCount();
-        return this._cards.pop();
+        return (this._cards.pop() as Card);
     }
 
     /**
@@ -65,7 +65,7 @@ export class Stack {
      */
     public shift(): Card {
         this.validateCount();
-        return this._cards.shift();
+        return (this._cards.shift() as Card);
     }
 
     /**

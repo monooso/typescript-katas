@@ -10,6 +10,7 @@
             "test"
         ],
         "sourceMap": true,
+        "strictNullChecks": true,
         "target": "es6"
     },
     "include": [
