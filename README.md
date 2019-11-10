@@ -2,12 +2,13 @@
 
 Code katas, implemented in [TypeScript](https://www.typescriptlang.org/). Contains solutions to the following problems:
 
-- [Alphabet Cipher](https://github.com/gigasquid/wonderland-clojure-katas/tree/master/alphabet-cipher)
-- ["War" Card Game](https://github.com/gigasquid/wonderland-clojure-katas/tree/master/card-game-war)
-- [Leap Year](https://github.com/garora/TDD-Katas/blob/master/KatasReadme.md#leap-year-)
-- [Karate Chop](http://codekata.com/kata/kata02-karate-chop/)
-- [FizzBuzz](http://codingdojo.org/kata/FizzBuzz/)
-- [Anagram](http://codingdojo.org/kata/Anagram/)
+1. [Alphabet Cipher](https://github.com/gigasquid/wonderland-clojure-katas/tree/master/alphabet-cipher)
+2. ["War" Card Game](https://github.com/gigasquid/wonderland-clojure-katas/tree/master/card-game-war)
+3. [Leap Year](https://github.com/garora/TDD-Katas/blob/master/KatasReadme.md#leap-year-)
+4. [Karate Chop](http://codekata.com/kata/kata02-karate-chop/)
+5. [FizzBuzz](http://codingdojo.org/kata/FizzBuzz/)
+6. [Anagram](http://codingdojo.org/kata/Anagram/)
+7. [Dictionary Replacer](http://codingdojo.org/kata/DictionaryReplacer/)
 
 ## Running the code
 All of the solutions are built using TypeScript 3.6, and are tested using [Mocha][mocha] and [Chai][chai], running on Node 12.13.
