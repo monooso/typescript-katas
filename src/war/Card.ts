@@ -1,5 +1,5 @@
-import { CardSuit } from "./CardSuit";
-import { CardValue } from "./CardValue";
+import { CardSuit } from './CardSuit';
+import { CardValue } from './CardValue';
 
 export class Card {
     /**
@@ -12,7 +12,7 @@ export class Card {
     }
 
     /**
-     * Returns a human-readable string representation of the card. For example, "Jack of Hearts".
+     * Returns a human-readable string representation of the card. For example, 'Jack of Hearts'.
      *
      * @return {string}
      */

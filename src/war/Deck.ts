@@ -1,7 +1,7 @@
-import { Card } from "./Card";
-import { CardSuit } from "./CardSuit";
-import { CardValue } from "./CardValue";
-import { Stack } from "./Stack";
+import { Card } from './Card';
+import { CardSuit } from './CardSuit';
+import { CardValue } from './CardValue';
+import { Stack } from './Stack';
 
 export class Deck extends Stack {
     /**

@@ -1,4 +1,4 @@
-import { Card } from "./Card";
+import { Card } from './Card';
 
 export class Stack {
     protected _cards: Card[] = [];
@@ -99,7 +99,7 @@ export class Stack {
 
     /**
      * Returns a human readable comma-delimited list of the cards in the stack.
-     * For example: "Jack of Spades, Three of Diamonds".
+     * For example: 'Jack of Spades, Three of Diamonds'.
      *
      * @return {string}
      */
@@ -110,7 +110,7 @@ export class Stack {
             signature.push(card.toString());
         });
 
-        return signature.join(", ");
+        return signature.join(', ');
     }
 
     /**
@@ -120,7 +120,7 @@ export class Stack {
      */
     protected validateCount() {
         if (this.isEmpty()) {
-            throw new Error("Cannot retrieve a card from an empty stack");
+            throw new Error('Cannot retrieve a card from an empty stack');
         }
     }
 }

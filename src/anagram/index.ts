@@ -25,7 +25,7 @@ const solveAnagram = (anagramWord: string, dictionary: string[]): string[] => {
   ): string[] => {
     return dictionary.slice(index + 1)
       .filter((pairWord: string): boolean => (anagramWord === sortString(baseWord + pairWord)))
-      .map((pairWord: string): string => [baseWord, pairWord].sort().join(" "))
+      .map((pairWord: string): string => [baseWord, pairWord].sort().join(' '))
   })
 
   return deduplicateArray(flattenArray(solutions)).sort()

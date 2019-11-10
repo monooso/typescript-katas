@@ -1,8 +1,8 @@
-import { Card } from "./Card";
+import { Card } from './Card';
 
 export class Battle {
     /**
-     * "Battles" the given cards, and returns the winner.
+     * 'Battles' the given cards, and returns the winner.
      *
      * @param {Card} one
      * @param {Card} two

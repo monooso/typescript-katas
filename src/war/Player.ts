@@ -1,5 +1,5 @@
-import { Card } from "./Card";
-import { Stack } from "./Stack";
+import { Card } from './Card';
+import { Stack } from './Stack';
 
 export class Player {
     private _hand: Stack;

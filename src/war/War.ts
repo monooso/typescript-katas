@@ -1,6 +1,6 @@
-import { Battle } from "./Battle";
-import { Deck } from "./Deck";
-import { Player } from "./Player";
+import { Battle } from './Battle';
+import { Deck } from './Deck';
+import { Player } from './Player';
 
 export class War {
     /**
@@ -67,7 +67,7 @@ export class War {
      */
     public getWinner(): Player {
         if (!this.isFinished()) {
-            throw new Error("Cannot determine the winner of an unfinished war");
+            throw new Error('Cannot determine the winner of an unfinished war');
         }
         return this._one.hand.count() > 0 ? this._one : this._two;
     }
