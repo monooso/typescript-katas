@@ -7,6 +7,7 @@ Code katas, implemented in [TypeScript](https://www.typescriptlang.org/). Contai
 - [Leap Year](https://github.com/garora/TDD-Katas/blob/master/KatasReadme.md#leap-year-)
 - [Karate Chop](http://codekata.com/kata/kata02-karate-chop/)
 - [FizzBuzz](http://codingdojo.org/kata/FizzBuzz/)
+- [Anagram](http://codingdojo.org/kata/Anagram/)
 
 ## Running the code
 All of the solutions are built using TypeScript 3.6, and are tested using [Mocha][mocha] and [Chai][chai], running on Node 12.13.
