@@ -1,34 +1,27 @@
-const sortString = (input: string): string => normalizeString(input).split('').sort().join('')
+const sortString = (input: string): string => input.toLowerCase().split('').sort().join('')
 
-const normalizeString = (input: string): string => input.toLowerCase()
+const findAnagramPairs = (target: string, base: string, dictionary: string[]): string[] => {
+  if (dictionary.length === 0) { return [] }
 
-const deduplicateArray = (input: any[]): any[] => [...new Set(input)]
+  const matches: string[] = dictionary.reduce((previous: string[], pair: string): string[] => {
+    if (target === sortString(base + pair)) {
+      previous.push([base, pair].sort().join(' '))
+    }
 
-const normalizeDictionary = (input: string[]): string[] => {
-  return deduplicateArray(input).map((word: string): string => normalizeString(word))
+    return previous
+  }, [])
+
+  return [...matches, ...findAnagramPairs(target, dictionary.pop() as string, dictionary)]
 }
 
-const optimizeDictionary = (anagramWord: string, dictionary: string[]): string[] => {
-  return dictionary.filter((word: string): boolean => (word.length <= anagramWord.length))
-}
+const solveAnagram = (target: string, dictionary: string[]): string[] => {
+  dictionary = [...new Set(dictionary)]
+    .filter((word: string): boolean => (word.length < target.length))
+    .map((word: string): string => word.toLowerCase())
 
-const flattenArray = (nested: any[]): any[] => [].concat(...nested)
+  target = sortString(target)
 
-const solveAnagram = (anagramWord: string, dictionary: string[]): string[] => {
-  anagramWord = sortString(anagramWord)
-  dictionary = optimizeDictionary(anagramWord, normalizeDictionary(dictionary))
-
-  const solutions: Array<string[]> = dictionary.map((
-    baseWord: string,
-    index: number,
-    dictionary: string[]
-  ): string[] => {
-    return dictionary.slice(index + 1)
-      .filter((pairWord: string): boolean => (anagramWord === sortString(baseWord + pairWord)))
-      .map((pairWord: string): string => [baseWord, pairWord].sort().join(' '))
-  })
-
-  return deduplicateArray(flattenArray(solutions)).sort()
+  return findAnagramPairs(target, dictionary.pop() as string, dictionary)
 }
 
 export { solveAnagram }
