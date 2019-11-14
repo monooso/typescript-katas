@@ -44,6 +44,10 @@ describe('Numbers in Words', () => {
       expect(numberToWords(1_000)).to.equal('one thousand')
     })
 
+    it('converts 1,001 to one thousand and one', () => {
+      expect(numberToWords(1_001)).to.equal('one thousand and one')
+    })
+
     it('converts 12,345,678 to twelve million, three hundred and forty five thousand, six hundred and seventy eight', () => {
       expect(numberToWords(12_345_678)).to.equal('twelve million, three hundred and forty five thousand, six hundred and seventy eight')
     })

@@ -34,18 +34,23 @@ const multiples: { [index: number]: string } = {
   1_000_000: 'million'
 }
 
-const chunkToWords = (num: number): string[] => {
-  if (num === 0) { return [] }
-  if (lookup[num]) { return [lookup[num]] }
+/**
+ * Convert the given number 'chunk' to words
+ *
+ * Note that the chunk will never be more than 999.
+ */
+const chunkToWords = (chunk: number): string[] => {
+  if (chunk === 0) { return [] }
+  if (lookup[chunk]) { return [lookup[chunk]] }
 
-  const factor: number = Math.pow(10, new String(num).length - 1)
-  const remainder: number = num % factor
+  const factor: number = Math.pow(10, new String(chunk).length - 1)
+  const remainder: number = chunk % factor
 
-  let words = num < 100
-    ? [...chunkToWords(num - remainder), ...chunkToWords(remainder)]
-    : [...chunkToWords(Math.floor(num / factor)), multiples[100], ...chunkToWords(remainder)]
+  let words = chunk < 100
+    ? [...chunkToWords(chunk - remainder), ...chunkToWords(remainder)]
+    : [...chunkToWords(Math.floor(chunk / factor)), multiples[100], ...chunkToWords(remainder)]
 
-  return words.filter((word: string): boolean => word.length > 0)
+  return words
 }
 
 /**
@@ -65,24 +70,64 @@ const chunkNumber = (num: number): number[] => {
     .reverse()
 }
 
+const addMultiplierSuffix = (words: string[], index: number): string[] => {
+  return index > 0 ? [...words, multiples[Math.pow(10, index * 3)]] : words
+}
+
+const implodeChunkWords = (words: string[]): string => words.join(' ').trim()
+
+const implodeChunks = (words: string[]): string => words.length > 2 ? words.join(', ') : words.join(' ')
+
+const discardEmptyWords = (word: string): boolean => word.trim().length > 0
+
+/**
+ * Process a single number chunk
+ *
+ * @param chunk The number to process
+ * @param index The index of the chunk in the array of chunks
+ * @param allChunks The array of chunks
+ */
+const processChunk = (chunk: number, index: number, allChunks: number[]): string[] => {
+  let words: string[] = chunkToWords(chunk).filter(discardEmptyWords)
+
+  if (words.length === 0) { return words }
+
+  /**
+   * Tricky:
+   * If there is more than one chunk, this is the first, and it's less than 100,
+   * add the prefix 'and'.
+   *
+   * This takes care of situations such as 'one million and one'.
+   */
+  if (allChunks.length > 1 && index === 0 && chunk < 100) {
+    words.unshift('and')
+    return words
+  }
+
+  // If chunk is greater than one hundred, add the 'and' to 'x hundred and y'
+  return chunk > 100
+    ? words.map((word: string): string => word.replace('hundred', 'hundred and'))
+    : words
+}
+
+/**
+ * Convert the given number to words
+ *
+ * Example:
+ * 12,345,026 -> twelve million, three hundred and forty five thousand, and twenty six
+ */
 const numberToWords = (num: number): string => {
   if (num === 0) { return 'zero' }
 
-  return chunkNumber(num)
+  const words: string[] = chunkNumber(num)
     .reverse()
-    .map((num: number, index: number): string[] => {
-      let words = index === 0
-        ? chunkToWords(num)
-        : [...chunkToWords(num), multiples[Math.pow(10, index * 3)]]
+    .map(processChunk)
+    .map(addMultiplierSuffix)
+    .map(implodeChunkWords)
+    .filter(discardEmptyWords)
+    .reverse()
 
-      return num > 100
-        ? words.map((word: string): string => word.replace('hundred', 'hundred and'))
-        : words
-    })
-    .map((words: string[]): string => words.join(' ').trim())
-    .filter((word: string): boolean => word.length > 0)
-    .reverse()
-    .join(', ')
+  return implodeChunks(words)
 }
 
 export { numberToWords }
