@@ -35,5 +35,17 @@ describe('Numbers in Words', () => {
     it('converts 101 to one hundred and one', () => {
       expect(numberToWords(101)).to.equal('one hundred and one')
     })
+
+    it('converts 123 to one hundred and twenty three', () => {
+      expect(numberToWords(123)).to.equal('one hundred and twenty three')
+    })
+
+    it('converts 1,000 to one thousand', () => {
+      expect(numberToWords(1_000)).to.equal('one thousand')
+    })
+
+    it('converts 12,345,678 to twelve million, three hundred and forty five thousand, six hundred and seventy eight', () => {
+      expect(numberToWords(12_345_678)).to.equal('twelve million, three hundred and forty five thousand, six hundred and seventy eight')
+    })
   })
 })
