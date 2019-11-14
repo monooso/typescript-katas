@@ -34,9 +34,9 @@ const multiples: { [index: number]: string } = {
   1_000_000: 'million'
 }
 
-const chunkToWords = (num: number, suffix: string = ''): string[] => {
+const chunkToWords = (num: number): string[] => {
   if (num === 0) { return [] }
-  if (lookup[num]) { return [lookup[num], suffix] }
+  if (lookup[num]) { return [lookup[num]] }
 
   const factor: number = Math.pow(10, new String(num).length - 1)
   const remainder: number = num % factor
@@ -45,9 +45,7 @@ const chunkToWords = (num: number, suffix: string = ''): string[] => {
     ? [...chunkToWords(num - remainder), ...chunkToWords(remainder)]
     : [...chunkToWords(Math.floor(num / factor)), multiples[100], ...chunkToWords(remainder)]
 
-  words = words.filter((word: string): boolean => word.length > 0)
-
-  return suffix ? [...words, suffix] : words
+  return words.filter((word: string): boolean => word.length > 0)
 }
 
 /**
@@ -75,7 +73,7 @@ const numberToWords = (num: number): string => {
     .map((num: number, index: number): string[] => {
       let words = index === 0
         ? chunkToWords(num)
-        : chunkToWords(num, multiples[Math.pow(10, index * 3)])
+        : [...chunkToWords(num), multiples[Math.pow(10, index * 3)]]
 
       return num > 100
         ? words.map((word: string): string => word.replace('hundred', 'hundred and'))
