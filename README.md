@@ -10,6 +10,7 @@ Code katas, implemented in [TypeScript](https://www.typescriptlang.org/). Contai
 6. [Anagram](http://codingdojo.org/kata/Anagram/)
 7. [Dictionary Replacer](http://codingdojo.org/kata/DictionaryReplacer/)
 8. [Diamond](http://codingdojo.org/kata/Diamond/)
+9. [Numbers in Words](http://codingdojo.org/kata/NumbersInWords/)
 
 ## Running the code
 All of the solutions are built using TypeScript 3.6, and are tested using [Mocha][mocha] and [Chai][chai], running on Node 12.13.
